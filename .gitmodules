@@ -1,0 +1,9 @@
+[submodule "MayFlower-Simulator"]
+	path = MayFlower-Simulator
+	url = git@github.com:alexandar1000/MayFlower-Simulator.git
+[submodule "MayFlower-RobotSystem"]
+	path = MayFlower-RobotSystem
+	url = git@github.com:alexandar1000/MayFlower-RobotSystem.git
+[submodule "MayFlower-WebPortal"]
+	path = MayFlower-WebPortal
+	url = git@github.com:alexandar1000/MayFlower-WebPortal.git
