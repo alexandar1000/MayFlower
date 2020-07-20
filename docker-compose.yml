@@ -37,6 +37,7 @@ services:
             context: ./MayFlower-Server
             dockerfile: Dockerfile
         command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver"
+        tty: true
         ports:
             - "8001:8000"
         networks: 
