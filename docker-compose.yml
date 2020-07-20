@@ -1,0 +1,66 @@
+version: '3.7'
+
+services:
+
+    ros1_base:
+        container_name: ros1_base
+        build: 
+            context: ./MayFlower-RobotSystem
+            dockerfile: Dockerfile
+        image: ros1_base
+        ports: 
+          - "9090:9090"
+        networks:
+          - rosnet
+        tty: true
+        command:
+          - "/bin/bash" 
+          - "-c" 
+          - "roscore"
+
+    web_app:
+        container_name: web_app
+        build:
+            context: ./MayFlower-WebPortal
+            dockerfile: Dockerfile
+        networks: 
+            - rosnet
+        tty: true
+        ports:
+        - 3001:3000
+        environment:
+        - CHOKIDAR_USEPOLLING=true
+
+    server:
+        container_name: server_api
+        build:
+            context: ./MayFlower-Server
+            dockerfile: Dockerfile
+        command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver"
+        ports:
+            - "8001:8000"
+        networks: 
+            - rosnet
+
+    # Use postgres/example user/password credentials
+    db:
+        image: postgres
+        restart: always
+        ports: 
+            - 5432:5432
+        environment:
+            POSTGRES_PASSWORD: example
+        networks: 
+            - rosnet
+    
+    adminer:
+        image: adminer
+        restart: always
+        ports:
+            - 8081:8080
+        networks: 
+            - rosnet
+
+networks:
+    rosnet:
+        driver: bridge
