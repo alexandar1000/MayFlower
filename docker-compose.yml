@@ -31,6 +31,17 @@ services:
         environment:
         - CHOKIDAR_USEPOLLING=true
 
+    server:
+        container_name: server_api
+        build:
+            context: ./MayFlower-Server
+            dockerfile: Dockerfile
+        command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver"
+        ports:
+            - "8001:8000"
+        networks: 
+            - rosnet
+
     # Use postgres/example user/password credentials
     db:
         image: postgres
