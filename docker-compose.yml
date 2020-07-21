@@ -42,6 +42,8 @@ services:
             - "8001:8000"
         networks: 
             - rosnet
+        depends_on: 
+            - db
 
     # Use postgres/example user/password credentials
     db:
